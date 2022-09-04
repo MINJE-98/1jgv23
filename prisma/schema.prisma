@@ -1,0 +1,140 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model category {
+  id           Int     @id @default(autoincrement()) @db.UnsignedInt
+  categoryName String  @db.VarChar(30)
+  content      String? @db.VarChar(300)
+  posts        posts[]
+}
+
+model comments {
+  id        BigInt    @id @default(autoincrement())
+  usersID   Int       @db.UnsignedInt
+  postsID   BigInt
+  content   String    @db.VarChar(300)
+  replyTo   BigInt?
+  createdAt DateTime  @db.DateTime(0)
+  updatedAt DateTime? @db.DateTime(0)
+  deletedAt DateTime? @db.DateTime(0)
+  posts     posts     @relation(fields: [postsID], references: [id], onDelete: Cascade, map: "FK_comments_postsID_posts_id")
+  users     users     @relation(fields: [usersID], references: [id], onDelete: Cascade, map: "FK_comments_usersID_users_id")
+
+  @@index([postsID], map: "FK_comments_postsID_posts_id")
+  @@index([usersID], map: "FK_comments_usersID_users_id")
+}
+
+model imageUpload {
+  id            BigInt   @id @default(autoincrement())
+  usersID       Int?     @db.UnsignedInt
+  pathUrl       String   @db.VarChar(300)
+  fileSizeBytes Int
+  fileType      String   @db.VarChar(20)
+  createdAt     DateTime @db.DateTime(0)
+  users         users?   @relation(fields: [usersID], references: [id], map: "FK_imageUpload_usersID_users_id")
+
+  @@index([usersID], map: "FK_imageUpload_usersID_users_id")
+}
+
+model postLike {
+  id        BigInt    @id @default(autoincrement())
+  usersID   Int       @db.UnsignedInt
+  postsID   BigInt
+  likedAt   DateTime  @db.DateTime(0)
+  deletedAt DateTime? @db.DateTime(0)
+  posts     posts     @relation(fields: [postsID], references: [id], onDelete: Cascade, map: "FK_postLike_postsID_posts_id")
+  users     users     @relation(fields: [usersID], references: [id], onDelete: Cascade, map: "FK_postLike_usersID_users_id")
+
+  @@index([postsID], map: "FK_postLike_postsID_posts_id")
+  @@index([usersID], map: "FK_postLike_usersID_users_id")
+}
+
+model postView {
+  id       BigInt   @id @default(autoincrement())
+  userIP   String   @db.VarChar(16)
+  postsID  BigInt
+  viewedAt DateTime @db.DateTime(0)
+  posts    posts    @relation(fields: [postsID], references: [id], onDelete: Cascade, map: "FK_postView_postsID_posts_id")
+
+  @@index([postsID], map: "FK_postView_postsID_posts_id")
+}
+
+model posts {
+  id              BigInt     @id @default(autoincrement())
+  usersID         Int        @db.UnsignedInt
+  categoryID      Int        @db.UnsignedInt
+  title           String     @db.VarChar(50)
+  subTitle        String?
+  thumbNailURL    String?    @db.VarChar(300)
+  viewCounts      Int        @default(0) @db.UnsignedInt
+  likes           Int        @default(0) @db.UnsignedInt
+  markDownContent String?    @db.MediumText
+  private         Int        @default(0) @db.TinyInt
+  createdAt       DateTime   @db.DateTime(0)
+  updatedAt       DateTime?  @db.DateTime(0)
+  deletedAt       DateTime?  @db.DateTime(0)
+  createdDay      DateTime?  @db.Date()
+  category        category   @relation(fields: [categoryID], references: [id], onDelete: Cascade, map: "FK_posts_categoryID_category_id")
+  users           users      @relation(fields: [usersID], references: [id], onDelete: Cascade, map: "FK_posts_usersID_users_id")
+  comments        comments[]
+  postLike        postLike[]
+  postView        postView[]
+
+  @@index([categoryID], map: "FK_posts_categoryID_category_id")
+  @@index([likes, createdAt], map: "createdAt_likes_INDEX")
+  @@index([usersID, id], map: "userID_postID_INDEX")
+}
+
+model users {
+  id                Int            @id @default(autoincrement()) @db.UnsignedInt
+  userName          String         @default("User") @db.VarChar(50)
+  proFileImageURL   String?        @db.VarChar(300)
+  mailAddress       String?        @db.VarChar(50)
+  provider          OauthProvider?
+  providerServiceId String?
+  createdAt         DateTime       @db.DateTime(0)
+  updatedAt         DateTime?      @db.DateTime(0)
+  deletedAt         DateTime?      @db.DateTime(0)
+  comments          comments[]
+  imageUpload       imageUpload[]
+  postLike          postLike[]
+  posts             posts[]
+}
+
+enum OauthProvider {
+  GITHUB
+}
+
+// NOTE: 유저 refreshToken 기록 테이블
+// users.id --------<  usersAuth.userId
+model usersAuth {
+  refreshToken String    @id
+  userId       Int
+  userIp       String?
+  userAgent    String?
+  lastUseAt    DateTime?
+  expireAt     DateTime?
+}
+
+// NOTE: 유저 설정 기록 테이블
+// users.id --------<  usersSetting.userId
+model usersSetting {
+  id      Int         @id @default(autoincrement()) @db.UnsignedInt
+  userId  Int
+  type    settingType
+  content String?
+}
+
+enum settingType {
+  DISPLAY_NAME
+  INTRO_MSG
+  EMAIL
+  POSITION
+}
