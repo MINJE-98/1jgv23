@@ -18,6 +18,10 @@ export declare class UsersRepository {
     }): import(".prisma/client").Prisma.Prisma__usersClient<{
         id: number;
     }>;
+    findOneByName({ prismaConnection, userName, }: {
+        prismaConnection: PrismaConnection;
+        userName: users['userName'];
+    }): import(".prisma/client").Prisma.Prisma__usersClient<users | null>;
     findOneById({ prismaConnection, userId, }: {
         prismaConnection: PrismaConnection;
         userId: users['id'];

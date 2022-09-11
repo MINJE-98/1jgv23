@@ -19,6 +19,7 @@ const posts_decorator_1 = require("./posts.decorator");
 const posts_service_1 = require("./posts.service");
 const jwt_user_Id_decorator_1 = require("../../library/decorators/jwt-user-Id.decorator");
 const create_post_dto_1 = require("./dto/create-post.dto");
+const delete_post_dto_1 = require("./dto/delete-post.dto");
 const get_post_detail_dto_1 = require("./dto/get-post-detail.dto");
 const get_posts_detail_dto_1 = require("./dto/get-posts-detail.dto");
 const modify_post_dto_1 = require("./dto/modify-post.dto");
@@ -61,6 +62,11 @@ let PostsController = class PostsController {
                 name: result.category.categoryName,
             },
         });
+    }
+    async deletePosts({ userId }, { postId }) {
+        if (!userId)
+            throw new common_1.UnauthorizedException(users_auth_error_1.unauthorizedUser);
+        return this.postsService.DeletePost(userId, postId);
     }
     async getPosts(getPostsRequestQueryDto, { userId }) {
         const isPersonal = getPostsRequestQueryDto.userId
@@ -128,6 +134,15 @@ __decorate([
     __metadata("design:paramtypes", [get_post_detail_dto_1.GetPostDetailRequestQueryDto, Object, String]),
     __metadata("design:returntype", Promise)
 ], PostsController.prototype, "getPostDetail", null);
+__decorate([
+    (0, posts_decorator_1.DeletePost)(),
+    openapi.ApiResponse({ status: 200, type: Object }),
+    __param(0, (0, jwt_user_Id_decorator_1.JwtUserId)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, delete_post_dto_1.DeletePostRequestBodyDto]),
+    __metadata("design:returntype", Promise)
+], PostsController.prototype, "deletePosts", null);
 __decorate([
     (0, posts_decorator_1.GetPosts)(),
     openapi.ApiResponse({ status: 200, type: require("./dto/get-posts-detail.dto").GetPostsResponseDto }),

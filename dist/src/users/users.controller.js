@@ -41,8 +41,8 @@ let UsersController = class UsersController {
             throw new common_1.UnauthorizedException(users_auth_error_1.unauthorizedUser);
         return new get_me_dto_1.GetMeResponseDto(await this.usersSettingService.getUserProfileAndSetting(userId));
     }
-    async getUserProfile({ userId }) {
-        return new get_user_profile_dto_1.GetUserProfileResponseDto(await this.usersSettingService.getUserProfileAndSetting(userId));
+    async getUserProfile({ userName }) {
+        return new get_user_profile_dto_1.GetUserProfileResponseDto(await this.usersSettingService.getWithUserNameProfileAndSetting(userName));
     }
 };
 __decorate([

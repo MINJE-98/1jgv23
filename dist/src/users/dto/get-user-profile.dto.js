@@ -13,19 +13,16 @@ exports.GetUserProfileResponseDto = exports.GetUserProfileRequestParamDto = void
 const openapi = require("@nestjs/swagger");
 const swagger_1 = require("@nestjs/swagger");
 const client_1 = require("@prisma/client");
-const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 class GetUserProfileRequestParamDto {
     static _OPENAPI_METADATA_FACTORY() {
-        return { userId: { required: true, type: () => Number } };
+        return { userName: { required: true, type: () => String } };
     }
 }
 __decorate([
-    (0, class_transformer_1.Transform)(({ value }) => Number(value)),
-    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Object)
-], GetUserProfileRequestParamDto.prototype, "userId", void 0);
+], GetUserProfileRequestParamDto.prototype, "userName", void 0);
 exports.GetUserProfileRequestParamDto = GetUserProfileRequestParamDto;
 class GetUserProfileSettingItem {
     static _OPENAPI_METADATA_FACTORY() {

@@ -1,6 +1,6 @@
 import { users, usersSetting } from '@prisma/client';
 export declare class GetUserProfileRequestParamDto {
-    userId: users['id'];
+    userName: users['userName'];
 }
 declare class GetUserProfileSettingItem {
     type: usersSetting['type'];

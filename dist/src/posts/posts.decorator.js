@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetPosts = exports.GetPostDetail = exports.ModifyPost = exports.CreatePost = void 0;
+exports.GetPosts = exports.GetPostDetail = exports.ModifyPost = exports.DeletePost = exports.CreatePost = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const jwt_access_token_guard_1 = require("../../library/guards/auth/jwt-access-token.guard");
@@ -10,6 +10,10 @@ const CreatePost = () => (0, common_1.applyDecorators)((0, common_1.Post)(), (0,
     summary: '포스트를 작성합니다.',
 }), (0, swagger_1.ApiOkResponse)({ description: '게시글 생성성공', type: undefined }));
 exports.CreatePost = CreatePost;
+const DeletePost = () => (0, common_1.applyDecorators)((0, common_1.Delete)(), (0, jwt_access_token_guard_1.JwtAccessTokenGuard)(), (0, swagger_1.ApiTags)('Post'), (0, swagger_1.ApiOperation)({
+    summary: '포스트를 삭제합니다.',
+}), (0, swagger_1.ApiOkResponse)({ description: '게시글 삭제성공', type: undefined }));
+exports.DeletePost = DeletePost;
 const ModifyPost = () => (0, common_1.applyDecorators)((0, common_1.Put)(), (0, jwt_access_token_guard_1.JwtAccessTokenGuard)(), (0, swagger_1.ApiTags)('Post'), (0, swagger_1.ApiOperation)({
     summary: '포스트를 수정합니다.',
 }), (0, swagger_1.ApiOkResponse)({ description: '게시글 수정성공', type: undefined }));

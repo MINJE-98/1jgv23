@@ -51,6 +51,13 @@ let PostsService = class PostsService {
             isPrivate,
         });
     }
+    DeletePost(userId, postId) {
+        return this.postsRepository.deleteById({
+            prismaConnection: this.prismaService,
+            postId,
+            userId,
+        });
+    }
     async getPostDetail(postId, userId, userIp) {
         try {
             await this.prismaService.$transaction(async (prisma) => {

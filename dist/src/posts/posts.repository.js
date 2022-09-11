@@ -26,6 +26,15 @@ let PostsRepository = class PostsRepository {
             },
         });
     }
+    deleteById({ prismaConnection, postId, userId, }) {
+        return prismaConnection.posts.updateMany({
+            data: { deletedAt: (0, date_1.now)() },
+            where: {
+                id: postId,
+                usersID: userId,
+            },
+        });
+    }
     updateById({ prismaConnection, postId, categoryId, title, subTitle, thumbnailUrl, markdownContent, isPrivate, }) {
         return prismaConnection.posts.update({
             where: { id: postId },

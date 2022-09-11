@@ -43,7 +43,6 @@ let CommentsService = class CommentsService {
         });
     }
     async getComments({ postId, replyTo, }) {
-        var _a;
         const hasPost = await this.postsRepository.getDetailFindById(this.prismaService, postId);
         if (!hasPost)
             throw new common_1.NotFoundException(posts_error_1.postNotFound);
@@ -52,7 +51,6 @@ let CommentsService = class CommentsService {
             postId,
             replyTo,
         });
-        console.log(typeof ((_a = commentsList[0]) === null || _a === void 0 ? void 0 : _a.updatedAt));
         return commentsList.map((item) => {
             return Object.assign(Object.assign({}, item), { content: item.deletedAt ? null : item.content });
         });

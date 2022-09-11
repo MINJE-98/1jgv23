@@ -35,13 +35,36 @@ let UsersSettingService = class UsersSettingService {
             content,
         });
     }
+    getWithUserNameProfileAndSetting(userName) {
+        return this.prismaService.$transaction(async (prisma) => {
+            const userProfile = await this.usersRepository.findOneByName({
+                prismaConnection: prisma,
+                userName,
+            });
+            if (!userProfile)
+                throw new common_1.NotFoundException();
+            const userSetting = await this.usersSettingRepository.getManyByUserId({
+                prismaConnection: prisma,
+                userId: userProfile.id,
+            });
+            return {
+                userId: userProfile.id,
+                name: userProfile.userName,
+                avatar: userProfile.proFileImageURL,
+                createdAt: userProfile.createdAt,
+                settings: userSetting.map((val) => {
+                    return { type: val.type, content: val.content };
+                }),
+            };
+        });
+    }
     getUserProfileAndSetting(userId) {
         return this.prismaService.$transaction(async (prisma) => {
-            const userSetting = await this.usersSettingRepository.getManyByUserId({
+            const userProfile = await this.usersRepository.findOneById({
                 prismaConnection: prisma,
                 userId,
             });
-            const userProfile = await this.usersRepository.findOneById({
+            const userSetting = await this.usersSettingRepository.getManyByUserId({
                 prismaConnection: prisma,
                 userId,
             });

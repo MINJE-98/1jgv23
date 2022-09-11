@@ -27,6 +27,7 @@ export declare class PostsService {
         markdownContent: posts['markDownContent'];
         isPrivate: boolean;
     }): Promise<posts>;
+    DeletePost(userId: posts['usersID'], postId: posts['id']): import(".prisma/client").PrismaPromise<import(".prisma/client").Prisma.BatchPayload>;
     getPostDetail(postId: posts['id'], userId: posts['usersID'] | null, userIp: postView['userIP']): Promise<posts & {
         category: import(".prisma/client").category;
         users: import(".prisma/client").users;

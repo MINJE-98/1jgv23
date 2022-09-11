@@ -12,6 +12,11 @@ export declare class PostsRepository {
         markdownContent: posts['markDownContent'];
         isPrivate: boolean;
     }): import(".prisma/client").Prisma.Prisma__postsClient<posts>;
+    deleteById({ prismaConnection, postId, userId, }: {
+        prismaConnection: PrismaConnection;
+        postId: posts['id'];
+        userId: posts['usersID'];
+    }): import(".prisma/client").PrismaPromise<import(".prisma/client").Prisma.BatchPayload>;
     updateById({ prismaConnection, postId, categoryId, title, subTitle, thumbnailUrl, markdownContent, isPrivate, }: {
         prismaConnection: PrismaConnection;
         postId: posts['id'];

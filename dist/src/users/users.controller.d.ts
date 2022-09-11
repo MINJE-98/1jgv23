@@ -8,5 +8,5 @@ export declare class UsersController {
     constructor(usersSettingService: UsersSettingService);
     setSetting({ userId }: TokenPayload, setSettingRequestBodyDto: SetSettingRequestBodyDto): Promise<null>;
     getMe({ userId }: TokenPayload): Promise<GetMeResponseDto>;
-    getUserProfile({ userId }: GetUserProfileRequestParamDto): Promise<GetUserProfileResponseDto>;
+    getUserProfile({ userName }: GetUserProfileRequestParamDto): Promise<GetUserProfileResponseDto>;
 }

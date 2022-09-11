@@ -42,6 +42,9 @@ let UsersRepository = class UsersRepository {
             },
         });
     }
+    findOneByName({ prismaConnection, userName, }) {
+        return prismaConnection.users.findFirst({ where: { userName } });
+    }
     findOneById({ prismaConnection, userId, }) {
         return prismaConnection.users.findUnique({ where: { id: userId } });
     }

@@ -14,7 +14,7 @@ const GetMe = () => (0, common_1.applyDecorators)((0, common_1.Get)('me'), (0, j
     summary: '로그인된 유저정보를 요청합니다.',
 }), (0, swagger_1.ApiOkResponse)({ description: '내 정보 로드완료', type: get_me_dto_1.GetMeResponseDto }));
 exports.GetMe = GetMe;
-const GetUserProfile = () => (0, common_1.applyDecorators)((0, common_1.Get)('profile/:userId'), (0, swagger_1.ApiTags)('User'), (0, swagger_1.ApiOperation)({
+const GetUserProfile = () => (0, common_1.applyDecorators)((0, common_1.Get)('profile/:userName'), (0, swagger_1.ApiTags)('User'), (0, swagger_1.ApiOperation)({
     summary: '특정 유저프로필 정보를 요청합니다.',
 }), (0, swagger_1.ApiOkResponse)({
     description: '유저 프로필 로드완료',
