@@ -92,7 +92,7 @@ let PostsRepository = class PostsRepository {
             },
             where: Object.assign(Object.assign(Object.assign(Object.assign({}, (userId && { usersID: userId })), (categoryId && { categoryID: categoryId })), (!hasPrivatePosts && { private: 0 })), { createdDay: {
                     in: dayCount ? (0, date_1.arrayOfLastDate)((0, date_1.now)(), dayCount) : undefined,
-                }, users: { deletedAt: null } }),
+                }, deletedAt: null, users: { deletedAt: null } }),
             orderBy: [{ [`${sortScope}`]: 'desc' }],
             skip: page === 0 ? 0 : maxContent * page,
             take: maxContent,
