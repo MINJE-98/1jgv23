@@ -13,7 +13,7 @@ export declare class UsersSettingService {
         content: usersSetting['content'];
     }): Promise<usersSetting>;
     getWithUserNameProfileAndSetting(userName: users['userName']): Promise<{
-        userId: number;
+        id: number;
         name: string;
         avatar: string | null;
         createdAt: Date;

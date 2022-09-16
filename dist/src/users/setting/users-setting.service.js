@@ -48,7 +48,7 @@ let UsersSettingService = class UsersSettingService {
                 userId: userProfile.id,
             });
             return {
-                userId: userProfile.id,
+                id: userProfile.id,
                 name: userProfile.userName,
                 avatar: userProfile.proFileImageURL,
                 createdAt: userProfile.createdAt,

@@ -11,7 +11,7 @@ const GithubLogin = () => (0, common_1.applyDecorators)((0, common_1.Get)('githu
 exports.GithubLogin = GithubLogin;
 const GithubLoginCallback = () => (0, common_1.applyDecorators)((0, common_1.Get)('github/callback'), (0, github_auth_guard_1.GithubAuthGuard)(), (0, swagger_1.ApiTags)('Auth'), (0, swagger_1.ApiOperation)({
     summary: '깃허브 콜백 엔드포인트 입니다.',
-}), (0, swagger_1.ApiOkResponse)({ description: '깃허브 로그인 콜백', type: undefined }), (0, common_1.Redirect)('http://localhost:3000/callback'));
+}), (0, swagger_1.ApiOkResponse)({ description: '깃허브 로그인 콜백', type: undefined }), (0, common_1.Redirect)('http://www.tilog.link:3000/callback'));
 exports.GithubLoginCallback = GithubLoginCallback;
 const GetAccessTokenUsingRefreshToken = () => (0, common_1.applyDecorators)((0, common_1.Post)('access-token'), (0, swagger_1.ApiTags)('Auth'), (0, swagger_1.ApiOperation)({
     summary: '액세스 토큰을 요청합니다.',
